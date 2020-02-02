@@ -8,7 +8,7 @@ Sitecore Content Hub Importer allows importing image assets from an Excel file, 
 The importer is a console C# application built on .NET Core framework.
 
 
-How to Use Content Hub Importer?
+Usage Instructions
 -----------------------------------------
 Open the solution in Visual Studio 2019 and either run the application or create an executable, which can be run later. 
 
