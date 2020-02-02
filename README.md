@@ -1,4 +1,4 @@
-What is Content Hub Importer/
+Overview
 ===================================
 
 Sitecore Content Hub Importer allows importing image assets from an Excel file, online XML Sitemap, and a URL. 
