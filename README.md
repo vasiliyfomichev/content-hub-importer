@@ -1,7 +1,7 @@
 Overview
 ===================================
 
-Sitecore Content Hub Importer allows importing image assets from an Excel file, online XML Sitemap, and a URL. 
+Sitecore Content Hub Importer allows importing image assets from an Excel Asset file, online XML Sitemap, and a URL. For the XML Sitemap and a URL the tool crawls the page(s) and pulls images from the HTML source code, as well as from internal and external CSS and JavaScript.
 
 ![Sitecore SignalR Tools](http://www.cmsbestpractices.com/wp-content/uploads/2015/07/sitecore-signalr-tools-logo.png)
 
@@ -20,6 +20,7 @@ Data Source Formats
 
 - Excel - an example of the excel file format is included in /data folder of the project
 - XML Sitemap - this opion relies on the format provided by https://www.sitemaps.org/protocol.html
+- Web URL - a URL to a web page
 
 
 Contributing
