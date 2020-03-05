@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>ContentHub.Importer</RootNamespace>
     <AssemblyName>CHImporter</AssemblyName>
+    <ApplicationIcon>sitecore_logo_uI7_icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
