@@ -2,7 +2,10 @@
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Text;
+using System.Linq;
 
 namespace ContentHub.Importer.Providers
 {
@@ -11,9 +14,19 @@ namespace ContentHub.Importer.Providers
         public static List<Asset> GetAssets(string path)
         {
             Console.WriteLine($"Starting to parse {path} sitemap.");
-            var webGet = new HtmlWeb();
-            var doc = webGet.Load(path);
-            var urlNodes = doc.DocumentNode.SelectNodes("url");
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.OptionReadEncoding = false;
+            var request = (HttpWebRequest)WebRequest.Create(path);
+            request.Method = "GET";
+            using (var response = (HttpWebResponse)request.GetResponse())
+            {
+                using (var stream = response.GetResponseStream())
+                {
+                    htmlDoc.Load(stream, Encoding.UTF8);
+                }
+            }
+                                 
+            var urlNodes = htmlDoc.DocumentNode.SelectNodes("//url");
             Console.WriteLine($"Found {urlNodes.Count} URLs to parse in the sitemap.");
 
             var assets = new List<Asset>();
@@ -26,12 +39,16 @@ namespace ContentHub.Importer.Providers
                 });
             }
 
-            foreach(var url in urls)
+            foreach(var url in urls.Take(2))
             {
                 assets.AddRange(new UrlService().GetImages(url.Url));
             }
-            
-            Console.WriteLine($"Found {assets.Count} assets to import.");
+
+            Console.WriteLine();
+            Console.WriteLine($"*************************************************");
+            Console.WriteLine($"Found a total of {assets.Count} assets to import.");
+            Console.WriteLine($"*************************************************");
+            Console.WriteLine();
             return assets;
         }
     }

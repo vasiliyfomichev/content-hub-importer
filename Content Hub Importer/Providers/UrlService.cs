@@ -22,6 +22,8 @@ namespace ContentHub.Importer.Providers
 
         public IEnumerable<Asset> GetImages(string url)
         {
+            Console.WriteLine();
+            Console.WriteLine($"Looking for assets in {url}.");
             var images = GetAllImageReferences(url);
             return images;
         }
@@ -60,7 +62,7 @@ namespace ContentHub.Importer.Providers
                     AssetType = "SocialMediaAsset"
                 });
             }
-
+            Console.WriteLine($"Found {assets.Count} assets to import.");
             return assets;
         }
 

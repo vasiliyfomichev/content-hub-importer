@@ -12,6 +12,8 @@ namespace ContentHub.Importer.Providers
 
         public static List<Asset> GetAssets(string filePath)
         {
+            Console.WriteLine($"Importing assets from {filePath}.");
+            Console.WriteLine();
             var assets = new List<Asset>();
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
@@ -44,7 +46,8 @@ namespace ContentHub.Importer.Providers
                     }
                 }
             }
-            
+
+            Console.WriteLine($"Found {assets.Count} assets to import.");
             return assets;
         }
     }

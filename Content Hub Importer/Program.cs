@@ -26,26 +26,29 @@ namespace ContentHub.Importer
             switch (option.KeyChar.ToString().ToLower())
             {
                 case "e":
+                    Console.WriteLine();
                     Console.WriteLine("Importing from Excel.");
                     Console.WriteLine("Please enter the full path to file: ");
                     var excelPath = Console.ReadLine();
                     excelPath = string.IsNullOrWhiteSpace(excelPath) ? @"C:\Users\vasfomic\Desktop\Content Hub Importer\Content Hub Importer\data\mock_data.xlsx" : excelPath;
-                    assets.AddRange(ExcelService.GetAssets(excelPath).Take(1));
+                    assets.AddRange(ExcelService.GetAssets(excelPath));
                     break;
                 case "x":
-                    Console.WriteLine("Importing from XML Sitemap.");
+                    Console.WriteLine();
+                    Console.WriteLine("Importing from an XML Sitemap.");
                     Console.WriteLine("Please enter the full URL to the XML Sitemap: ");
                     var sitemapUrl = Console.ReadLine();
                     sitemapUrl = string.IsNullOrWhiteSpace(sitemapUrl) ? @"https://www.cmsbestpractices.com/sitemap-1.xml" : sitemapUrl;
-                    assets.AddRange(XMLSitemapService.GetAssets(sitemapUrl).Take(1));
+                    assets.AddRange(XMLSitemapService.GetAssets(sitemapUrl).Take(20));
                     break;
 
                 case "u":
-                    Console.WriteLine("Importing from Excel.");
+                    Console.WriteLine();
+                    Console.WriteLine("Importing from a URL.");
                     Console.WriteLine("Please enter the URL to crawl:");
                     var url = Console.ReadLine();
                     url = string.IsNullOrWhiteSpace(url) ? @"https://www.cmsbestpractices.com" : url;
-                    assets.AddRange((new UrlService()).GetImages(url).Take(1));
+                    assets.AddRange((new UrlService()).GetImages(url));
                     break;
                 default:
                     Console.WriteLine("Urecognized option. Exiting...");
@@ -55,9 +58,11 @@ namespace ContentHub.Importer
         
             foreach (var asset in assets)
             {
-                Console.Write($"Importing asset from {asset.OriginUrl}.");
+                Console.WriteLine();
+                Console.Write($"Importing asset from {asset.OriginUrl}...");
                 Asset.SetupAsset(asset).Wait();
-                Console.WriteLine("Asset imported.");
+                Console.WriteLine("Import completed.");
+                Console.WriteLine();
             }
 
 

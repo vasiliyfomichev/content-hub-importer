@@ -27,7 +27,7 @@ namespace ContentHub.Importer
         public string AssetSource { get; set; }
         public string LifecycleStatus { get; set; }
 
-        private static string username = "ApiAdmin";
+        private static string username = "vasiliy.fomichev@teamone-usa.com";
 
         public string Title
         {
@@ -84,7 +84,8 @@ namespace ContentHub.Importer
 
             // Add a delay of 30 seconds to let the job complete
             //Task.Delay(30000).Wait();
-            Console.WriteLine($"Added asset {assetId}. Job ID {fetchJobId}");
+            Console.WriteLine();
+            Console.WriteLine($"Added asset ID: {assetId}. Job ID {fetchJobId}");
             //// Check if the fetchjob has completed
             //if (await Jobs.IsJobCompleted(fetchJobId))
             //{
@@ -100,8 +101,8 @@ namespace ContentHub.Importer
             // Set the mandatory title property
             asset.SetPropertyValue(Constants.Asset.Properties.Title, importedAsset.Title);
             asset.SetPropertyValue(Constants.Asset.Properties.Description, Constants.DefaultCulture ,importedAsset.Description);
-            asset.SetPropertyValue(Constants.Asset.Properties.AssetSource, importedAsset.AssetSource);
-            asset.SetPropertyValue(Constants.Asset.Properties.MarketingDescription, importedAsset.MarketingDescription);
+            //asset.SetPropertyValue(Constants.Asset.Properties.AssetSource, importedAsset.AssetSource);
+            //asset.SetPropertyValue(Constants.Asset.Properties.MarketingDescription, importedAsset.MarketingDescription);
 
             // Link the asset to content repository: standard
             var standardContentRepository = await client.Entities.GetAsync(Constants.ContentRepositories.Standard).ConfigureAwait(false);
@@ -114,20 +115,20 @@ namespace ContentHub.Importer
             finalLifeCycleRelation.Parent = finalLifeCycleCreated.Id.Value;
 
             // Link the asset to content security
-            if (!string.IsNullOrWhiteSpace(importedAsset.ContentSecurity))
-            {
-                var contentSecurityCreated = await client.Entities.GetAsync($"{Constants.Asset.ContentSecurityPrefix}{UppercaseFirst(importedAsset.ContentSecurity).Replace(" ", string.Empty)}").ConfigureAwait(false);
-                var contentSecurityRelation = asset.GetRelation<IChildToOneParentRelation>(Constants.Asset.Relations.ContentSecurityToAsset);
-                contentSecurityRelation.Parent = contentSecurityCreated.Id.Value;
-            }
+            //if (!string.IsNullOrWhiteSpace(importedAsset.ContentSecurity))
+            //{
+            //    var contentSecurityCreated = await client.Entities.GetAsync($"{Constants.Asset.ContentSecurityPrefix}{UppercaseFirst(importedAsset.ContentSecurity).Replace(" ", string.Empty)}").ConfigureAwait(false);
+            //    var contentSecurityRelation = asset.GetRelation<IChildToOneParentRelation>(Constants.Asset.Relations.ContentSecurityToAsset);
+            //    contentSecurityRelation.Parent = contentSecurityCreated.Id.Value;
+            //}
 
             // Link the asset to social media
-            if (!string.IsNullOrWhiteSpace(importedAsset.SocialMediaChannel))
-            {
-                var socialMediaChannelCreated = await client.Entities.GetAsync($"{Constants.Asset.SocialMediaChannelPrefix}{importedAsset.SocialMediaChannel}").ConfigureAwait(false);
-                var socialMediaChannelRelation = asset.GetRelation<IChildToOneParentRelation>(Constants.Asset.Relations.SocialMediaChannelToAsset);
-                socialMediaChannelRelation.Parent = socialMediaChannelCreated.Id.Value;
-            }
+            //if (!string.IsNullOrWhiteSpace(importedAsset.SocialMediaChannel))
+            //{
+            //    var socialMediaChannelCreated = await client.Entities.GetAsync($"{Constants.Asset.SocialMediaChannelPrefix}{importedAsset.SocialMediaChannel}").ConfigureAwait(false);
+            //    var socialMediaChannelRelation = asset.GetRelation<IChildToOneParentRelation>(Constants.Asset.Relations.SocialMediaChannelToAsset);
+            //    socialMediaChannelRelation.Parent = socialMediaChannelCreated.Id.Value;
+            //}
 
             // Link the asset to asset source
             //var assetSourceCreated = await client.Entities.GetAsync($"AssetSource.Legacy").ConfigureAwait(false);
